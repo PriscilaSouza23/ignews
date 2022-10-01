@@ -46,6 +46,15 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   const response = await prismic.getByUID("publication", String(slug), {});
 
+  if (!response) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
   const post = {
     slug,
     title: RichText.asText(response.data.title),
